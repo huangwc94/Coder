@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Question List</h1>
+<%= link_to 'New Question', new_question_path,class:"btn btn-success" %>
+<div class="row">
+
+    <% @questions.each do |question| %>
+        <div class="col-md-3">
+        <h3><%= link_to question.title, question %></h3>
+        <%= question.quest.html_safe %>
+        <hr>
+      </div>
+    <% end %>
+
+</div>

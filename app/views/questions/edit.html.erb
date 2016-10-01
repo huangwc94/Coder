@@ -1,0 +1,8 @@
+<h1>Edit</h1>
+<div class="btn-group" role="group" aria-label="...">
+<%= link_to 'Edit', edit_question_path(@question),class:"btn btn-warning btn" %>
+
+<%= link_to 'Back', questions_path,class:"btn btn-info" %>
+<%= link_to 'Destroy', @question, method: :delete, data: { confirm: 'Are you sure?' },class:"btn btn-danger" %>
+</div>
+<%= render 'form' %>

@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+  <h2><%= @question.title %></h2>
+  <div class="btn-group" role="group" aria-label="...">
+  <%= link_to 'Edit', edit_question_path(@question),class:"btn btn-warning btn" %>
+
+  <%= link_to 'Back', questions_path,class:"btn btn-info" %>
+  <%= link_to 'Destroy', @question, method: :delete, data: { confirm: 'Are you sure?' },class:"btn btn-danger" %>
+  </div>
+  <hr>
+
+  <%= @question.quest.html_safe  %>
+
+
+<p>
+  <strong>Answer:</strong>
+  <div id="editor"><%= @question.answer %></div>
+</p>
+
+
+<script>
+    var editor = ace.edit("editor");
+    
+    editor.setReadOnly(true)
+    editor.setTheme("ace/theme/twilight");
+    var pymode = ace.require("ace/mode/python").Mode;
+    editor.session.setMode(new pymode());
+</script>
