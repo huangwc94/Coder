@@ -10,10 +10,13 @@ class ApplicationController < ActionController::Base
       @categories = Set.new
 
       Question.uniq.pluck(:category).each do |d|
-        dd = d.split(";")
-        dd.each do |c|
-          @categories.add c
+        if d
+          dd = d.split(";")
+          dd.each do |c|
+            @categories.add c
+          end
         end
+
       end
 
     end
