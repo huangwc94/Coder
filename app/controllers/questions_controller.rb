@@ -72,6 +72,18 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def run
+    tmp_file = "#{Rails.root}/tmp/test.py"
+    id = 0
+
+    File.open(tmp_file, 'w+') do |f|
+      f.write params[:code]
+    end
+
+    stdout = with_timeout "python #{tmp_file}", 5
+    render plain:stdout
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_question
@@ -80,7 +92,40 @@ class QuestionsController < ApplicationController
         @question.category = ""
       end
     end
+    # timeout is in seconds
+  def with_timeout(cmd, timeout)
 
+
+    # popen2e combines stdout and stderr into one IO object
+    i, oe, t = Open3.popen2e(cmd) # stdin, stdout+stderr, thread
+    t[:timed_out] = false
+    i.close
+
+    # Purposefully NOT using Timeout.rb because in general it is a dangerous API!
+    # http://blog.headius.com/2008/02/rubys-threadraise-threadkill-timeoutrb.html
+    Thread.new do
+      sleep timeout
+      if t.alive?
+        suppress(Errno::ESRCH) do # 'No such process' (possible race condition)
+          # NOTE: we are assuming the command will create ONE process (not handling subprocs / proc groups)
+          Process.kill('TERM', t.pid)
+          t[:timed_out] = true
+        end
+      end
+    end
+
+    t.value # wait for process to finish, one way or the other
+    out = oe.read(10000)
+    out = "*** Empty output ***" if out.nil?
+    oe.close
+
+    if t[:timed_out]
+      out << "\n" unless out.blank?
+      out << "*** Process failed to complete after #{timeout} seconds ***"
+    end
+
+    out
+  end
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
       params.require(:question).permit(:title, :quest, :answer,:category)
