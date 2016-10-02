@@ -42,10 +42,11 @@
     
     <%= f.submit "Submit",:class=>"btn btn-success btn-lg" %>
   </div>
-<button class="btn btn-success" id="run">Run</button>
+<% end %>
+<a class="btn btn-success" id="run">Run</a>
 <div id="result" class="well col-sm-12">
 </div>
-<% end %>
+
     <script>
         var textarea = $('#code').hide();
         var editor = ace.edit("editor");
