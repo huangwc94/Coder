@@ -8,15 +8,16 @@ class ApplicationController < ActionController::Base
   private
     def get_category
       @categories = Set.new
-
-      Question.uniq.pluck(:category).each do |d|
-        if d
-          dd = d.split(";")
-          dd.each do |c|
-            @categories.add c
+      if Question.uniq.pluck(:category).length > 0
+        Question.uniq.pluck(:category).each do |d|
+          if d
+            dd = d.split(";")
+            dd.each do |c|
+              @categories.add c
+            end
           end
-        end
 
+        end
       end
 
     end
