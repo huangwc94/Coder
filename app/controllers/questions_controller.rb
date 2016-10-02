@@ -4,11 +4,17 @@ class QuestionsController < ApplicationController
   # GET /questions
   # GET /questions.json
   def index
-    if params[:type]
+
+    if params[:search] and params[:type]
+      @questions = Question.where("category LIKE ? and (title LIKE ? or quest LIKE ?)","%#{params[:type]}%","%#{params[:search]}%","%#{params[:search]}%")
+    elsif params[:type]
       @questions = Question.where("category LIKE ?","%#{params[:type]}%")
+    elsif  params[:search]
+      @questions = Question.where("title LIKE ? or quest LIKE ?","%#{params[:search]}%","%#{params[:search]}%")
     else
       @questions = Question.all
     end
+
 
   end
 

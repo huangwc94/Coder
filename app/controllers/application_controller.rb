@@ -21,6 +21,7 @@ class ApplicationController < ActionController::Base
       end
       @categories = @categories.to_a
       @categories.sort!
-
+      @type = params[:type].nil? ? "ALL" : params[:type]
+      print @type
     end
 end

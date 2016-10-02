@@ -3,6 +3,10 @@
 <h1>Question List</h1>
 <%= link_to 'New Question', new_question_path,class:"btn btn-success" %>
 <div class="row">
+   <% if @questions.length == 0 %>
+    <h3> there is not question here! </h3>
+   <% end %>
+
 
     <% @questions.each do |question| %>
         <div class="col-md-6">
