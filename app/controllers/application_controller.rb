@@ -19,6 +19,8 @@ class ApplicationController < ActionController::Base
 
         end
       end
+      @categories = @categories.to_a
+      @categories.sort!
 
     end
 end
