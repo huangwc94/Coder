@@ -76,7 +76,7 @@
         request.done(function( msg ) {
           $("#run").removeClass("disabled");
           disable = false;
-          $( "#result" ).html("<h3>Run Result</h3><br />"+msg.replace(/(?:\r\n|\r|\n)/g, '<br />'));
+          $( "#result" ).html("<h3>Run Result</h3><hr>"+msg.replace(/(?:\r\n|\r|\n)/g, '<br />'));
         });
       }
 
