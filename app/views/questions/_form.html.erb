@@ -36,11 +36,15 @@
     </div>
   </div>
 <hr>
+
 <div class="col-sm-2"></div>
 <div class="col-sm-10">
+    
     <%= f.submit "Submit",:class=>"btn btn-success btn-lg" %>
   </div>
-
+<button class="btn btn-success" id="run">Run</button>
+<div id="result" class="well col-sm-12">
+</div>
 <% end %>
     <script>
         var textarea = $('#code').hide();
@@ -54,6 +58,30 @@
         editor.setTheme("ace/theme/twilight");
         var pymode = ace.require("ace/mode/python").Mode;
         editor.session.setMode(new pymode());
+      
+         var disable = false;
+    $("#run").click(function(){
+      $("#result").html("Executing...");
+
+      if (!disable){
+        $("#run").addClass("disabled");
+        disable = true;
+        var request = $.ajax({
+          url: "<%= run_path %>",
+          method: "POST",
+          data: { code : editor.getValue() },
+          dataType: "html"
+        });
+        request.done(function( msg ) {
+          $("#run").removeClass("disabled");
+          disable = false;
+          $( "#result" ).html("<h3>Run Result</h3><br />"+msg.replace(/(?:\r\n|\r|\n)/g, '<br />'));
+        });
+      }
+
+    });
+      
+      
 </script>
 <script type="text/javascript">
   $(document).ready(function(){
@@ -61,6 +89,6 @@
     $('.wysihtml5').each(function(i, elem) {
       $(elem).wysihtml5();
     });
-
+    
   })
 </script>
