@@ -1,6 +1,14 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Question List</h1>
+
+<% if params[:search] %>
+  <h4>Search:<%= params[:search] %></h4>
+<% end %>
+<% if params[:type] %>
+  <h4>Category:<%= params[:type] %></h4>
+<% end %>
+<hr>
 <%= link_to 'New Question', new_question_path,class:"btn btn-success" %>
 <div class="row">
    <% if @questions.length == 0 %>
@@ -18,7 +26,7 @@
          %>
         <p>
           <% question.category.split(";").each do |cat| %>
-          <span class="label label-primary"><%= cat %></span>
+          <a href="<%= questions_path(type:cat) %>" > <span class="label label-primary"><%= cat %></span></a>
           <% end %>
         </p>
         <%= question.quest.html_safe %>

@@ -3,7 +3,7 @@
   <h2><%= @question.title %></h2>
   <p>
     <% @question.category.split(";").each do |cat| %>
-    <span class="label label-primary"><%= cat %></span>
+    <a href="<%= questions_path(type:cat) %>" ><span class="label label-primary"><%= cat %></span></a>
     <% end %>
   </p>
   <div class="btn-group" role="group" aria-label="...">
