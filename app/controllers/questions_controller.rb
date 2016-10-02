@@ -4,7 +4,12 @@ class QuestionsController < ApplicationController
   # GET /questions
   # GET /questions.json
   def index
-    @questions = Question.all
+    if params[:type]
+      @questions = Question.where("category LIKE ?","%#{params[:type]}%")
+    else
+      @questions = Question.all
+    end
+
   end
 
   # GET /questions/1
@@ -69,11 +74,6 @@ class QuestionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
-      print "="*100
-      print "Answer"
-      print params["question"][:answer]
-      
-      print "#"*100
-      params.require(:question).permit(:title, :quest, :answer)
+      params.require(:question).permit(:title, :quest, :answer,:category)
     end
 end

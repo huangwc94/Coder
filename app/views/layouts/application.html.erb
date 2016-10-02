@@ -7,8 +7,44 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Coder List</a>
+    </div>
+
+
+  </div><!-- /.container-fluid -->
+</nav>
 <div class="container">
-<%= yield %>
+  <div class="row">
+    <div class="col-md-3"  >
+      <div class="panel panel-info" data-spy="affix" data-offset-top="50" data-offset-bottom="200">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Category</div>
+
+      <ul class="list-group">
+        <%= link_to "ALL",questions_path,class:"list-group-item" %>
+
+      <% @categories.each do |cate| %>
+        <%= link_to cate,questions_path(type:cate),class:"list-group-item" %>
+
+      <% end %>
+    </ul>
+      </div>
+    </div>
+    <div class="col-md-9">
+        <%= yield %>
+    </div>
+  </div>
+
 </div>
 </body>
 </html>
