@@ -17,7 +17,7 @@
 
 
     <% @questions.each do |question| %>
-        <div class="col-md-6">
+        <div class="col-md-6" style="height:100px">
         <h3><%= link_to question.title, question %></h3>
         <%
           if question.category.nil?
